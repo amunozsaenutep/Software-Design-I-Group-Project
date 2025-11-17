@@ -4,6 +4,9 @@
 // Here we have to add any extra library that will be designed
 
 //Here we can add the function prototypes that we will utilize
+void add_client_info(accLIST *theList);
+void print_clients_list(accLIST *theList);
+
 
 //Main structures definition
 typedef struct account //Individual accounts structure
@@ -43,24 +46,24 @@ int main()
 		if(strcmp(controlVal, "add") == 0)
 		{
 			// Enter data command
-			add_point_to_shape(&clientsLIST);
+			add_client_info(&clientsLIST);
 		}
 		else if(strcmp(controlVal, "print") == 0)
 		{
 			// Print data command
-			print_shape(&clientsLIST);
+			print_clients_list(&clientsLIST);
 		}
 		else if(strcmp(controlVal, "store") == 0)
 		{
 			// Save data command
 			printf("To be implemented\n");
-			//store_shape(&clientsLIST);
+			//store_list(&clientsLIST);
 		}
 		else if(strcmp(controlVal, "load") == 0)
 		{
 			// Load data command
 			printf("To be implemented\n");
-			//load_shape(&clientsLIST);
+			//load_list(&clientsLIST);
 		}
 		else if(strcmp(controlVal, "help") == 0)
 		{

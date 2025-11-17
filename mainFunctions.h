@@ -1,45 +1,49 @@
-void add_point_to_shape(sSHAPE *theShape)
+//We will write the functions that we were asked for on this file
+
+//Function that adds a client
+void add_client_info(clientsLIST *theList)
 {
-	sPOINT *newPoint = malloc(sizeof(sPOINT));
+	accINFO *newClient = malloc(sizeof(accINFO));
 
 	// Poll the user for the coordinates of the new point
 	printf("Enter the new point's coordinates\n");
-	printf("x: "); scanf("%lg", &(newPoint->x));
-	printf("y: "); scanf("%lg", &(newPoint->y));
-	newPoint->next = NULL; newPoint->prev = NULL;	// default pointer values are NULL
+	printf("x: "); scanf("%lg", &(newClient->x));
+	printf("y: "); scanf("%lg", &(newClient->y));
+	newClient->next = NULL; newClient->prev = NULL;	// default pointer values are NULL
 
 	// Queue the point at the end of the existing shape's point list
-	if(theShape->tail == NULL)
+	if(theList->tail == NULL)
 	{
 		// point list was empty
-		theShape->count = 1;
-		theShape->head = newPoint;
-		theShape->tail = newPoint;
+		theList->count = 1;
+		theList->head = newClient;
+		theList->tail = newClient;
 	}
 	else
 	{
 		// Add new point to the end of the point list
-		theShape->count++;
-		theShape->tail->next = newPoint;
-		newPoint->prev = theShape->tail;
-		theShape->tail = newPoint;
+		theList->count++;
+		theList->tail->next = newClient;
+		newClient->prev = theList->tail;
+		theList->tail = newClient;
 	}
 
 }
 
-void print_shape(sSHAPE *theShape)
+//Function that prints clients list
+void print_clients_list(clientsLIST *theList)
 {
-	sPOINT *travPtr;
+	accINFO *travPtr;
 
 	// If the shape has no points, print a message
-	if(theShape->head == NULL)
+	if(theList->head == NULL)
 	{
 		printf("Shape undefined\n");
 		return;
 	}
 
 	// Traverse the shape's list of points and print their coordinates
-	travPtr = theShape->head;
+	travPtr = theList->head;
 	while(travPtr != NULL)
 	{
 		printf("x = %lg, y = %lg\n", travPtr->x, travPtr->y);

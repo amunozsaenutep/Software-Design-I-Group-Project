@@ -23,42 +23,44 @@ typedef struct //List of accounts structure
   struct account *tail;
 } accLIST;
 
+//Create a list
+accLIST clientsLIST;
+
 int main()
 {
   char menuControl[100];
 	char *controlVal;
 	int i;
-	
-	accLIST.count = 0; accLIST.head = NULL; accLIST.tail = NULL;	// Initialize accounts list
-	
+
+	clientsLIST.count = 0; clientsLIST.head = NULL; clientsLIST.tail = NULL;	// Initialize accounts list
+
 	while(1)	// Render and operate the menu
 	{
 		printf("--> ");
-		scanf("%s", menuControl);
-		//printf("%s", commandStr);
+		scanf("%s", menuControl); //Menu selection
 
 		controlVal = strtok(menuControl, " \t");
 		if(strcmp(controlVal, "add") == 0)
 		{
 			// Enter data command
-			add_point_to_shape(&myShape);
+			add_point_to_shape(&clientsLIST);
 		}
 		else if(strcmp(controlVal, "print") == 0)
 		{
 			// Print data command
-			print_shape(&myShape);
+			print_shape(&clientsLIST);
 		}
 		else if(strcmp(controlVal, "store") == 0)
 		{
 			// Save data command
 			printf("To be implemented\n");
-			//store_shape(&myShape);
+			//store_shape(&clientsLIST);
 		}
 		else if(strcmp(controlVal, "load") == 0)
 		{
 			// Load data command
 			printf("To be implemented\n");
-			//load_shape(&myShape);
+			//load_shape(&clientsLIST);
 		}
 		else if(strcmp(controlVal, "help") == 0)
 		{
@@ -83,6 +85,8 @@ int main()
 		}
 	}
 
-	return 0;
+	return 0; //End of main
 }
+
+
 

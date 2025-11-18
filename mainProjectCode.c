@@ -37,6 +37,14 @@ int main()
 
 	clientsLIST.count = 0; clientsLIST.head = NULL; clientsLIST.tail = NULL;	// Initialize accounts list
 
+	printf("Available commands: \n"); //Menu commands
+	printf("add - Add new client information\n");
+	printf("print - Display clients information \n");
+	printf("store - Store clients information to a file in binary format \n");
+	printf("load - Load clients information from a file in binary format\n");
+	printf("help - Display this help message\n");
+	printf("exit - Exit the system\n");
+
 	while(1)	// Render and operate the menu
 	{
 		printf("--> ");
@@ -65,16 +73,44 @@ int main()
 			printf("To be implemented\n");
 			//load_list(&clientsLIST);
 		}
+		else if(strcmp(controlVal, "delete") == 0)
+		{
+			// Load data command
+			printf("To be implemented\n");
+			//load_list(&clientsLIST);
+		}
+		else if(strcmp(controlVal, "sort") == 0)
+		{
+			// Load data command
+			printf("To be implemented\n");
+			//load_list(&clientsLIST);
+		}
+		else if(strcmp(controlVal, "deposit") == 0)
+		{
+			// Load data command
+			printf("To be implemented\n");
+			//load_list(&clientsLIST);
+				}
+		else if(strcmp(controlVal, "withdrawal") == 0)
+				{
+			// Load data command
+			printf("To be implemented\n");
+			//load_list(&clientsLIST);
+				}
 		else if(strcmp(controlVal, "help") == 0)
 		{
 			// Help command
 			printf("Available commands: \n");
-			printf("add - add \n");
-			printf("print - print \n");
-			printf("store - store  data \n");
-			printf("load - load data \n");
-			printf("help - displays this help message\n");
-			printf("exit - exits the system\n");
+			printf("add - Add new client information\n");
+			printf("print - Display clients information \n");
+			printf("store - Store clients information to a file in binary format \n");
+			printf("load - Load clients information from a file in binary format\n");
+			printf("delete - Delete customer account \n");
+			printf("sort - Sort list of clients in alphabetical order \n");
+			printf("deposit - Deposit into account balance \n");
+			printf("withdrawal - Withdraw money from account balance \n");
+			printf("help - Display this help message\n");
+			printf("exit - Exit the system\n");
 		}
 		else if(strcmp(controlVal, "exit") == 0)
 		{

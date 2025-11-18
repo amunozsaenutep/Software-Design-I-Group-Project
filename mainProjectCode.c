@@ -77,26 +77,26 @@ int main()
 		{
 			// Load data command
 			printf("To be implemented\n");
-			//load_list(&clientsLIST);
+			//delete_client(&clientsLIST);
 		}
 		else if(strcmp(controlVal, "sort") == 0)
 		{
 			// Load data command
 			printf("To be implemented\n");
-			//load_list(&clientsLIST);
+			//sort_list(&clientsLIST);
 		}
 		else if(strcmp(controlVal, "deposit") == 0)
 		{
 			// Load data command
 			printf("To be implemented\n");
-			//load_list(&clientsLIST);
-				}
+			//account_deposit(&clientsLIST);
+		}
 		else if(strcmp(controlVal, "withdrawal") == 0)
-				{
+		{
 			// Load data command
 			printf("To be implemented\n");
-			//load_list(&clientsLIST);
-				}
+			//account_withdrawal(&clientsLIST);
+		}
 		else if(strcmp(controlVal, "help") == 0)
 		{
 			// Help command

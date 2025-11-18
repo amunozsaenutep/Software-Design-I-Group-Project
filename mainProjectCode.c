@@ -1,32 +1,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "mainFunctions.h"
+
 // Here we have to add any extra library that will be designed
 
-//Main structures definition
-typedef struct account //Individual accounts structure
-{
-  char firstName[30];
-  char lastName[30];
-  int accountID;
-  double accountBalance;
-  struct account *next;
-  struct account *prev;
-} accINFO;
-
-typedef struct //List of accounts structure
-{
-  unsigned int count;
-  struct account *head;
-  struct account *tail;
-} accLIST;
-
-//Create a list
-accLIST clientsLIST;
-
 //Here we can add the function prototypes that we will utilize
-void add_client_info(accLIST *theList);
-void print_clients_list(accLIST *theList);
+void add_client_info(accLIST *clientsLIST);
+void print_clients_list(accLIST *clientsLIST);
 
 int main()
 {

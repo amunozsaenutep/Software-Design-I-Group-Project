@@ -1,58 +1,133 @@
-//We will write the functions that we were asked for on this file
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <mainFunctions.h>
 
-void add_client_info(clientsLIST *theList)
+// Here we have to add any extra library that will be designed
+
+//Main structures definition
+typedef struct account //Individual accounts structure
 {
-	accINFO *newClient = malloc(sizeof(accINFO));
+  char firstName[30];
+  char lastName[30];
+  int accountID;
+  double accountBalance;
+  struct account *next;
+  struct account *prev;
+} accINFO;
 
-	// Poll the user for the coordinates of the new point
-	printf("Enter the new point's coordinates\n");
-	printf("x: "); scanf("%lg", &(newClient->x));
-	printf("y: "); scanf("%lg", &(newClient->y));
-	newClient->next = NULL; newClient->prev = NULL;	// default pointer values are NULL
-
-	// Queue the point at the end of the existing shape's point list
-	if(theList->tail == NULL)
-	{
-		// point list was empty
-		theList->count = 1;
-		theList->head = newClient;
-		theList->tail = newClient;
-	}
-	else
-	{
-		// Add new point to the end of the point list
-		theList->count++;
-		theList->tail->next = newClient;
-		newClient->prev = theList->tail;
-		theList->tail = newClient;
-	}
-
-}
-
-void print_clients_list(clientsLIST *theList)
+typedef struct //List of accounts structure
 {
-	accINFO *travPtr;
+  unsigned int count;
+  struct account *head;
+  struct account *tail;
+} accLIST;
 
-	// If the shape has no points, print a message
-	if(theList->head == NULL)
+//Create a list
+accLIST clientsLIST;
+
+//Here we can add the function prototypes that we will utilize
+void add_client_info(accLIST *theList);
+void print_clients_list(accLIST *theList);
+
+int main()
+{
+  char menuControl[100];
+  char *controlVal;
+  int i;
+
+	clientsLIST.count = 0; clientsLIST.head = NULL; clientsLIST.tail = NULL;	// Initialize accounts list
+
+	printf("Available commands: \n"); //Menu options
+	printf("add - Add new client information\n");
+	printf("print - Display clients information \n");
+	printf("store - Store clients information to a file in binary format \n");
+	printf("load - Load clients information from a file in binary format\n");
+	printf("delete - Delete customer account \n");
+	printf("sort - Sort list of clients in alphabetical order \n");
+	printf("deposit - Deposit into account balance \n");
+	printf("withdrawal - Withdraw money from account balance \n");
+	printf("help - Display this help message\n");
+	printf("exit - Exit the system\n");
+
+	while(1)	// Render and operate the menu
 	{
-		printf("Shape undefined\n");
-		return;
+		printf("--> ");
+		scanf("%s", menuControl); //Menu selection
+
+		controlVal = strtok(menuControl, " \t");
+		if(strcmp(controlVal,"add") == 0)
+		{
+			// Enter data command
+			add_client_info(&clientsLIST);
+		}
+		else if(strcmp(controlVal,"print") == 0)
+		{
+			// Print data command
+			print_clients_list(&clientsLIST);
+		}
+		else if(strcmp(controlVal, "store") == 0)
+		{
+			// Store data command
+			printf("To be implemented\n");
+			//store_list(&clientsLIST);
+		}
+		else if(strcmp(controlVal, "load") == 0)
+		{
+			// Load data command
+			printf("To be implemented\n");
+			//load_list(&clientsLIST);
+		}
+		else if(strcmp(controlVal, "delete") == 0)
+		{
+			// Delete client info command
+			printf("To be implemented\n");
+			//delete_client(&clientsLIST);
+		}
+		else if(strcmp(controlVal, "sort") == 0)
+		{
+			// Sort clients list command
+			printf("To be implemented\n");
+			//sort_list(&clientsLIST);
+		}
+		else if(strcmp(controlVal, "deposit") == 0)
+		{
+			// Deposit into account command
+			printf("To be implemented\n");
+			//account_deposit(&clientsLIST);
+		}
+		else if(strcmp(controlVal, "withdrawal") == 0)
+		{
+			// Withdraw from account command
+			printf("To be implemented\n");
+			//account_withdrawal(&clientsLIST);
+		}
+		else if(strcmp(controlVal, "help") == 0)
+		{
+			// Help command
+			printf("Available commands: \n");
+			printf("add - Add new client information\n");
+			printf("print - Display clients information \n");
+			printf("store - Store clients information to a file in binary format \n");
+			printf("load - Load clients information from a file in binary format\n");
+			printf("delete - Delete customer account \n");
+			printf("sort - Sort list of clients in alphabetical order \n");
+			printf("deposit - Deposit into account balance \n");
+			printf("withdrawal - Withdraw money from account balance \n");
+			printf("help - Display this help message\n");
+			printf("exit - Exit the system\n");
+		}
+		else if(strcmp(controlVal, "exit") == 0)
+		{
+			// Exit command
+			printf("Goodbye!\n");
+			return 0;
+		}
+		else
+		{
+			printf("Invalid command!\n"); //Exception to instructions
+		}
 	}
 
-	// Traverse the shape's list of points and print their coordinates
-	travPtr = theList->head;
-	while(travPtr != NULL)
-	{
-		printf("x = %lg, y = %lg\n", travPtr->x, travPtr->y);
-		travPtr = travPtr->next;
-	}
-
-	return;
+	return 0; //End of main
 }
-/*  void store_list(clientsLIST *theList)  PENDING FUNCTIONS
-	void load_list(clientsLIST *theList)
-	void delete_client(clientsLIST *theList)
-	void sort_list(clientsLIST *theList)
-	void account_desposit(clientsLIST *theList)
-	void account_withdrawal(clientsLIST *theList)

@@ -1,6 +1,5 @@
 //We will write the functions that we were asked for on this file
 
-//Function that adds a client
 void add_client_info(clientsLIST *theList)
 {
 	accINFO *newClient = malloc(sizeof(accINFO));
@@ -30,7 +29,6 @@ void add_client_info(clientsLIST *theList)
 
 }
 
-//Function that prints clients list
 void print_clients_list(clientsLIST *theList)
 {
 	accINFO *travPtr;
@@ -52,3 +50,9 @@ void print_clients_list(clientsLIST *theList)
 
 	return;
 }
+/*  void store_list(clientsLIST *theList)  PENDING FUNCTIONS
+	void load_list(clientsLIST *theList)
+	void delete_client(clientsLIST *theList)
+	void sort_list(clientsLIST *theList)
+	void account_desposit(clientsLIST *theList)
+	void account_withdrawal(clientsLIST *theList)

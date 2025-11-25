@@ -242,7 +242,132 @@ void delete_client(accLIST *clientsLIST)
 	free(travPtr);
 	printf("Element %s %s Acc. ID: %d Deleted successfully.\n", search1,search2,search3);
 }
-/* 				PENDING FUNCTIONS
-	void sort_list(clientsLIST *theList)
-	void account_desposit(clientsLIST *theList)
-	void account_withdrawal(clientsLIST *theList)*/
+
+void sort_list(accLIST *clientsLIST)
+{
+	accINFO *travPtr;
+	typedef struct temp
+	{
+		char tempLastName[30];
+		double tempAccountBal;
+		struct temp *next;
+		struct temp *prev;
+	}sortedNode;
+	printf("Clients list will be sorted based on Account Balance.\n");
+
+		if(clientsLIST->head==NULL) //Empty list
+		{
+			printf("List does not exist. Sorting cannot be completed.\n");
+			return;
+		}
+
+		travPtr = clientsLIST->head; //Place auxiliary pointer at the head
+
+		while(travPtr != NULL)
+		{
+			travPtr = travPtr->next;
+		}
+
+}
+
+void account_deposit(accLIST *clientsLIST)
+{
+	accINFO *travPtr; //Auxiliary travel pointer
+		char search1[30];
+		char search2[30];
+		int search3;
+		double deposit;
+
+		printf("Enter the first name, last name, and account ID to deposit.\n");
+		printf("\nFirst Name: "); scanf("%s",search1);
+		printf("\nLast Name: "); scanf("%s", search2);
+		printf("\nAccount ID: "); scanf("%d", &search3);
+		printf("\nEnter the amount of money to deposit: "); scanf("%lf",&deposit);
+
+		if(clientsLIST->head==NULL) //Empty list
+		{
+			printf("List does not exist. Deposit cannot be completed.\n");
+			return;
+		}
+
+		travPtr = clientsLIST->head; //Place auxiliary pointer at the head
+
+		while(travPtr != NULL && travPtr->firstName != search1 //Linear search for desired account
+				&& travPtr->lastName != search2 && travPtr->accountID != search3)
+		{
+			travPtr = travPtr->next;
+		}
+
+		if(travPtr == NULL) //If account is not found
+		{
+			printf("Account with elements %s %s Account ID: %d not found.\n", search1,search2,search3);
+		}
+
+		if(travPtr == clientsLIST->head) //CASE 1: Deposit to head client
+		{
+			travPtr->accountBalance = travPtr->accountBalance + deposit;
+		}
+
+		else if(travPtr == clientsLIST->tail) //CASE 2: Deposit to head client
+		{
+			travPtr->accountBalance = travPtr->accountBalance + deposit;
+		}
+		else //CASE 3: Deposit to head client
+		{
+			travPtr->accountBalance = travPtr->accountBalance + deposit;
+		}
+		free(travPtr);
+		printf("Successfully deposited %.2lf into account with elements %s %s Acc. ID: %d.\n", deposit,search1,search2,search3);
+		printf("New Account Balance: %.2lf\n\n",travPtr->accountBalance);
+}
+
+void account_withdrawal(accLIST *clientsLIST)
+{
+	accINFO *travPtr; //Auxiliary travel pointer
+			char search1[30];
+			char search2[30];
+			int search3;
+			double withdrawal;
+
+			printf("Enter the first name, last name, and account ID to deposit.\n");
+			printf("\nFirst Name: "); scanf("%s",search1);
+			printf("\nLast Name: "); scanf("%s", search2);
+			printf("\nAccount ID: "); scanf("%d", &search3);
+			printf("\nEnter the amount of money to deposit: "); scanf("%lf",&withdrawal);
+
+			if(clientsLIST->head==NULL) //Empty list
+			{
+				printf("List does not exist. Deposit cannot be completed.\n");
+				return;
+			}
+
+			travPtr = clientsLIST->head; //Place auxiliary pointer at the head
+
+			while(travPtr != NULL && travPtr->firstName != search1 //Linear search for desired account
+					&& travPtr->lastName != search2 && travPtr->accountID != search3)
+			{
+				travPtr = travPtr->next;
+			}
+
+			if(travPtr == NULL) //If account is not found
+			{
+				printf("Account with elements %s %s Account ID: %d not found.\n", search1,search2,search3);
+			}
+
+			if(travPtr == clientsLIST->head) //CASE 1: Deposit to head client
+			{
+				travPtr->accountBalance = travPtr->accountBalance - withdrawal;
+			}
+
+			else if(travPtr == clientsLIST->tail) //CASE 2: Deposit to head client
+			{
+				travPtr->accountBalance = travPtr->accountBalance - withdrawal;
+			}
+			else //CASE 3: Deposit to head client
+			{
+				travPtr->accountBalance = travPtr->accountBalance - withdrawal;
+			}
+			free(travPtr);
+			printf("Successfully withdrew %.2lf from account with elements %s %s Acc. ID: %d.\n", withdrawal,search1,search2,search3);
+			printf("New Account Balance: %.2lf\n\n",travPtr->accountBalance);
+}

@@ -9,6 +9,8 @@
 void add_client_info(accLIST *clientsLIST);
 void print_clients_list(accLIST *clientsLIST);
 void store_list(accLIST *clientsLIST);
+void load_list(accLIST *clientsLIST);
+void delete_client(accLIST *clientsLIST);
 
 int main()
 {
@@ -49,13 +51,11 @@ int main()
 		}
 		else if(strcmp(controlVal, "load") == 0)	// Load data command
 		{
-			printf("To be implemented\n");
-			//load_list(&clientsLIST);
+			load_list(&clientsLIST);
 		}
 		else if(strcmp(controlVal, "delete") == 0)	// Delete client info command
 		{
-			printf("To be implemented\n");
-			//delete_client(&clientsLIST);
+			delete_client(&clientsLIST);
 		}
 		else if(strcmp(controlVal, "sort") == 0)	// Sort clients list command
 		{

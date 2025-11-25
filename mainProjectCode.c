@@ -65,12 +65,12 @@ int main()
 		else if(strcmp(controlVal, "deposit") == 0)	// Deposit into account command
 		{
 			printf("To be implemented\n");
-			//account_deposit(&clientsLIST);
+			account_deposit(&clientsLIST);
 		}
 		else if(strcmp(controlVal, "withdrawal") == 0)	// Withdraw from account command
 		{
 			printf("To be implemented\n");
-			//account_withdrawal(&clientsLIST);
+			account_withdrawal(&clientsLIST);
 		}
 		else if(strcmp(controlVal, "help") == 0)		// Help command
 		{

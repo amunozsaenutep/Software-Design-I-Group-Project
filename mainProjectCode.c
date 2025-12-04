@@ -62,7 +62,6 @@ int main()
 		}
 		else if(strcmp(controlVal, "sort") == 0)	// Sort clients list command
 		{
-			printf("To be implemented\n");
 			sort_list(&clientsLIST);
 		}
 		else if(strcmp(controlVal, "deposit") == 0)	// Deposit into account command

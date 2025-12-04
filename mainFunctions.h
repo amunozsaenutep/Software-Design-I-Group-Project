@@ -74,7 +74,7 @@ void print_clients_list(accLIST *clientsLIST)
 		printf("\nFirst Name: %s\n Last Name: %s\n Account ID: %d\n Account Balance: %.3lf\n", travPtr->firstName, travPtr->lastName,travPtr->accountID,travPtr->accountBalance);
 		travPtr = travPtr->next;
 	}
-
+	free(travPtr);
 	return;
 }
 
@@ -97,19 +97,20 @@ void store_list(accLIST *clientsLIST)
 
 		// Traverse the list of clients and print their info
 		travPtr = clientsLIST->head;
+		size_t written_records;
 		while(travPtr != NULL)
 		{
 			//Write first element and record control
-			size_t written_records = fwrite(travPtr->firstName,sizeof(travPtr->firstName), 1,clientsFILES);
+			written_records = fwrite(travPtr->firstName,sizeof(travPtr->firstName), 1,clientsFILES);
 			//Write second element
 			fwrite(travPtr->lastName,sizeof(travPtr->lastName), 1,clientsFILES);
 			//Write third element
 			fwrite(&(travPtr->accountID),sizeof(int), 1,clientsFILES);
 			//Write fourth element
 			fwrite(&(travPtr->accountBalance),sizeof(double), 1,clientsFILES);
-
+''
 			travPtr = travPtr->next;
-
+		}
 				if (written_records != clientsLIST->count)
 				{
 					perror("Error writing to file\n");
@@ -118,8 +119,9 @@ void store_list(accLIST *clientsLIST)
 				{
 					printf("%zu elements successfully written\n", written_records);
 				}
-		}
+
 	fclose(clientsFILES);
+	free(travPtr);
 
 	return;
 }
@@ -128,22 +130,12 @@ void load_list(accLIST *clientsLIST)
 {
 	clientsFILES = fopen("clients.bin","rb");
 	accINFO *newClient = malloc(sizeof(accINFO));
-	int i;
+	int i=0;
+
 			if(clientsFILES == NULL)
 			{
 			perror("Error opening file\n");
 			}
-
-			for(i=0;i<clientsLIST->count;i++)
-			{
-				//Write first element
-				size_t read_records = fread(newClient->firstName,sizeof(newClient->firstName), 1,clientsFILES);
-				//Write second element
-				fread(newClient->lastName,sizeof(newClient->lastName), 1,clientsFILES);
-				//Write third element
-				fread(&(newClient->accountID),sizeof(int), 1,clientsFILES);
-				//Write fourth element
-				fread(&(newClient->accountBalance),sizeof(double), 1,clientsFILES);
 
 				// Queue the client at the end of the existing list
 					if(clientsLIST->tail == NULL)
@@ -162,8 +154,17 @@ void load_list(accLIST *clientsLIST)
 						clientsLIST->tail = newClient;
 					}
 
+					//Write first element
+								size_t read_records = fread(newClient->firstName,sizeof(newClient->firstName), 1,clientsFILES);
+								//Write second element
+								fread(newClient->lastName,sizeof(newClient->lastName), 1,clientsFILES);
+								//Write third element
+								fread(&(newClient->accountID),sizeof(int), 1,clientsFILES);
+								//Write fourth element
+								fread(&(newClient->accountBalance),sizeof(double), 1,clientsFILES);
 
-				printf("%zu",read_records);
+
+				printf("%zu records read\n",read_records);
 					if (read_records != clientsLIST->count)
 					{
 						perror("Error writing to file\n");
@@ -172,10 +173,8 @@ void load_list(accLIST *clientsLIST)
 					{
 						printf("%zu elements successfully written\n", read_records);
 					}
-			}
 		fclose(clientsFILES);
-
-		return;
+		free(newClient);
 }
 
 void delete_client(accLIST *clientsLIST)
@@ -245,30 +244,82 @@ void delete_client(accLIST *clientsLIST)
 
 void sort_list(accLIST *clientsLIST)
 {
-	accINFO *travPtr;
-	typedef struct temp
+	accINFO *tempNode;
+
+	int compareNodes(accLIST *clientsLIST, accINFO *tempNode)
 	{
-		char tempLastName[30];
-		double tempAccountBal;
-		struct temp *next;
-		struct temp *prev;
-	}sortedNode;
-	printf("Clients list will be sorted based on Account Balance.\n");
+	    if (clientsLIST->head->accountBalance < tempNode->accountBalance)
+	        return -1;
+	    if (clientsLIST->head->accountBalance > tempNode->accountBalance)
+	        return 1;
 
-		if(clientsLIST->head==NULL) //Empty list
-		{
-			printf("List does not exist. Sorting cannot be completed.\n");
-			return;
-		}
+	    // secondary compare by string
+	    return strcmp(clientsLIST->head->lastName, tempNode->lastName);
+	}
 
-		travPtr = clientsLIST->head; //Place auxiliary pointer at the head
+	accINFO* sortedInsert(accLIST *clientsLIST, accINFO *tempNode)
+	{
+	    accLIST* current;
 
-		while(travPtr != NULL)
-		{
-			travPtr = travPtr->next;
-		}
+	    // Case 1: put at head
+	    if (!clientsLIST->head || compareNodes(clientsLIST,tempNode)<= 0)
+	    {
+	        tempNode->next = clientsLIST->head;
+	        tempNode->prev = NULL;
+	        if (clientsLIST->head)
+	        	{
+	        	clientsLIST->head->prev = tempNode;
+	        	}
+	        return tempNode;
+	    }
 
+	    // Otherwise find insertion point
+	    current->head = clientsLIST->head;
+	    while (current->head->next && compareNodes(current, tempNode) > 0)
+	    {
+	        current->head = current->head->next;
+	    }
+
+	    // Insert after "current"
+	    tempNode->next = current->head->next;
+	    tempNode->prev = current->head;
+
+	    if (current->head->next)
+	        current->head->next->prev = tempNode;
+
+	    current->head->next = tempNode;
+
+	    return current->head;
+	}
+
+	accINFO* insertionSort(accLIST *clientsLIST)
+	{
+		accLIST* sorted = NULL;
+		accINFO* current = clientsLIST->head;
+
+	    while (current)
+	    {
+	    	sorted->head->next = current->next;
+
+	        current->prev = current->next = NULL; // detach node
+
+	        sorted->head->prev = sortedInsert(sorted, current);
+
+	        current = sorted->head->next;
+	    }
+	    return sorted->head;
+
+	    current = sorted->head;
+	    printf("List: ");
+	    while (current)
+	    {
+	    	printf("%.3f,%s",current->accountBalance,current->lastName);
+	    	current = current->next;
+	    	printf("\n");
+	    }
+	}
 }
+
 
 void account_deposit(accLIST *clientsLIST)
 {
